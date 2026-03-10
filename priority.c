@@ -1,39 +1,48 @@
 #include <stdio.h>
 
-struct process {
+struct process
+{
     char pid[10];
     int at, bt, pr;
     int ct, wt, tat;
     int done;
 };
 
-int main() {
+int main()
+{
     int n, i, time = 0, completed = 0, idx;
     float avg_wt = 0, avg_tat = 0;
+
     struct process p[20];
 
     scanf("%d", &n);
 
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++)
+    {
         scanf("%s %d %d %d", p[i].pid, &p[i].at, &p[i].bt, &p[i].pr);
         p[i].done = 0;
     }
 
-    while(completed < n) {
+    while(completed < n)
+    {
         idx = -1;
 
-        for(i = 0; i < n; i++) {
-            if(p[i].done == 0 && p[i].at <= time) {
-                if(idx == -1 ||
-                   p[i].pr < p[idx].pr ||
-                   (p[i].pr == p[idx].pr && p[i].at < p[idx].at)) {
+        for(i = 0; i < n; i++)
+        {
+            if(p[i].done == 0 && p[i].at <= time)
+            {
+                if(idx == -1 || p[i].pr < p[idx].pr ||
+                   (p[i].pr == p[idx].pr && p[i].at < p[idx].at))
+                {
                     idx = i;
                 }
             }
         }
 
-        if(idx != -1) {
+        if(idx != -1)
+        {
             time += p[idx].bt;
+
             p[idx].ct = time;
             p[idx].tat = p[idx].ct - p[idx].at;
             p[idx].wt = p[idx].tat - p[idx].bt;
@@ -43,24 +52,23 @@ int main() {
 
             p[idx].done = 1;
             completed++;
-        } 
-        else {
+        }
+        else
+        {
             time++;
         }
     }
 
     printf("Waiting Time:");
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++)
         printf(" %s %d", p[i].pid, p[i].wt);
-    }
 
     printf("\nTurnaround Time:");
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++)
         printf(" %s %d", p[i].pid, p[i].tat);
-    }
 
-    printf("\nAverage Waiting Time: %.2f", avg_wt/n);
-    printf("\nAverage Turnaround Time: %.2f", avg_tat/n);
+    printf("\nAverage Waiting Time: %.2f\n", avg_wt / n);
+    printf("Average Turnaround Time: %.2f\n", avg_tat / n);
 
     return 0;
 }
