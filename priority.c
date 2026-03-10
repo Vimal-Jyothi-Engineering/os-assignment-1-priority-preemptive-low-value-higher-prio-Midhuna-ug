@@ -23,15 +23,55 @@ int main()
         p[i].done = 0;
     }
 
-   ....
-     ...
-     ...
-     ...
-     ..
-     ..
-     ...
-     ..
-     .
+    while(completed < n)
+    {
+        idx = -1;
+        int highest_pr = 9999;
+
+        for(i = 0; i < n; i++)
+        {
+            if(p[i].at <= time && p[i].done == 0)
+            {
+                if(p[i].pr < highest_pr)
+                {
+                    highest_pr = p[i].pr;
+                    idx = i;
+                }
+                else if(p[i].pr == highest_pr)
+                {
+                    if(p[i].at < p[idx].at)
+                        idx = i;
+                }
+            }
+        }
+
+        if(idx != -1)
+        {
+            time += p[idx].bt;
+            p[idx].ct = time;
+            p[idx].tat = p[idx].ct - p[idx].at;
+            p[idx].wt = p[idx].tat - p[idx].bt;
+            p[idx].done = 1;
+
+            avg_wt += p[idx].wt;
+            avg_tat += p[idx].tat;
+
+            completed++;
+        }
+        else
+        {
+            time++;
+        }
+    }
+
+    printf("Waiting Time:\n");
+    for(i = 0; i < n; i++)
+        printf("%s %d\n", p[i].pid, p[i].wt);
+
+    printf("Turnaround Time:\n");
+    for(i = 0; i < n; i++)
+        printf("%s %d\n", p[i].pid, p[i].tat);
+
     printf("Average Waiting Time: %.2f\n", avg_wt / n);
     printf("Average Turnaround Time: %.2f\n", avg_tat / n);
 
