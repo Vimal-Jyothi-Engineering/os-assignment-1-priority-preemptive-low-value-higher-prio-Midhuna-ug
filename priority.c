@@ -31,7 +31,7 @@ int main()
             if(p[i].done == 0 && p[i].at <= time)
             {
                 if(idx == -1 || p[i].pr < p[idx].pr || 
-                   (p[i].pr == p[idx].pr && p[i].at < p[idx].at))
+                  (p[i].pr == p[idx].pr && p[i].at < p[idx].at))
                 {
                     idx = i;
                 }
@@ -57,14 +57,16 @@ int main()
         }
     }
 
+    printf("Waiting Time:");
     for(i = 0; i < n; i++)
-        printf("%s %d\n", p[i].pid, p[i].wt);
+        printf(" %s %d", p[i].pid, p[i].wt);
 
+    printf("\nTurnaround Time:");
     for(i = 0; i < n; i++)
-        printf("%s %d\n", p[i].pid, p[i].tat);
+        printf(" %s %d", p[i].pid, p[i].tat);
 
-    printf("%.2f\n", avg_wt / n);
-    printf("%.2f\n", avg_tat / n);
+    printf("\nAverage Waiting Time: %.2f", avg_wt/n);
+    printf("\nAverage Turnaround Time: %.2f", avg_tat/n);
 
     return 0;
 }
